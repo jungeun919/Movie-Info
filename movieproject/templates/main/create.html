@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Create</title>
+</head>
+<body>
+    <form action="{% url 'create' %}" method='POST' enctype='multipart/form-data'>
+        {% csrf_token %}
+        <label for="name">제목 : </label>
+            <input type="text" name="name" id="name" required autofocus><br>
+        <label for ="grade">평점 : </label>
+            <select name="grade" id="grade" required>
+                <option value="0.5">0.5</option>
+                <option value="1.0">1.0</option>
+                <option value="1.5">1.5</option>
+                <option value="2.0">2.0</option>
+                <option value="2.5">2.5</option>
+                <option value="3.0">3.0</option>
+                <option value="3.5">3.5</option>
+                <option value="4.0">4.0</option>
+                <option value="4.5">4.5</option>
+                <option value="5.0">5.0</option>
+              </select>
+              <br>
+        <label for ="pub_date">개봉 날짜 : </label>
+            <input type="date" name="pub_date" id="pub_date" required><br>
+        <label for ="running_time">상영 시간 : </label>
+            <input type="number" name="running_time" id="running_time" placeholder="시간 단위 : Minute" required><br>
+        <label for ="category">장르 : </label>
+            <input type="text" name="category" id="category" required><br>
+        <label for ="rank">영상물 등급 : </label>
+            <select name="rank" id="rank" required>
+                <option value="all">전체 관람가</option>
+                <option value="12">12세 이상 관람가</option>
+                <option value="15">15세 이상 관람가</option>
+                <option value="19">청소년 관람불가</option>
+              </select>
+              <br>
+        <label for ="image">포스터 사진 : </label>
+            <input type="file" name="image" accept="image/*"><br>
+        <input type="submit">
+    </form>    
+</body>
+</html>

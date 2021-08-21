@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home</title>
+</head>
+<body>
+    <a href="{% url 'create' %}">새 글 작성</a>
+    <br><br>
+    
+    {% for movie in movies %}
+        제목 : {{movie.name}}<br>
+        평점 : {{movie.get_grade_display}}<br>
+        개봉 날짜 : {{movie.pub_date}}<br>
+        상영 시간 : {{movie.running_time}}<br>
+        장르 : {{movie.category}}<br>
+        영상물 등급 : {{movie.get_rank_display}}<br>
+    
+        {% if movie.image %}
+        <img src="{{movie.image.url}}" height="400"><br>
+        {% endif %}
+    
+        <a href="{% url 'edit' movie.id %}">수정</a>
+        <a href="{% url 'delete' movie.id %}">삭제</a>
+        <br><br>
+    {% endfor %}
+    
+    
+    <!-- Paginator -->
+    {% if movies.has_previous %}
+        <a href="?page=1">처음</a>
+        <a href="?page={{movies.previous_page_number}}">이전</a>
+    {% endif %}
+    
+    {{movies.paginator.num_pages}} 페이지 중 {{movies.number}} 페이지 
+    
+    {% if movies.has_next %}
+        <a href="?page={{movies.next_page_number}}">다음</a>
+        <a href="?page={{movies.paginator.num_pages}}">마지막</a>
+    {% endif %}
+</body>
+</html>
