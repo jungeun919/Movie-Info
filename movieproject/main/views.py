@@ -4,10 +4,21 @@ from .models import Movie
 
 def home(request) :
     movie = Movie.objects.all()
+    sort = request.GET.get('sort','')
+    if sort == 'name':
+        movie = Movie.objects.all().order_by('name')
+    if sort == 'pub_date':
+        movie = Movie.objects.all().order_by('pub_date')
+    if sort == 'rank':
+        movie = Movie.objects.all().order_by('rank')
+    q = request.GET.get('q','')
+    if q:
+        movie = movie.filter(name__icontains=q)
     paginator = Paginator(movie, 3)
     page = request.GET.get('page')
     movie = paginator.get_page(page)
-    return render(request, 'main/home.html', {'movies' : movie})
+    
+    return render(request, 'home.html', {'movies' : movie, 'q':q})
 
 def create(request) :
     if request.method == 'POST' :
@@ -21,7 +32,7 @@ def create(request) :
         movie.image = request.FILES.get('image')
         movie.save()
         return redirect('home')
-    return render(request, 'main/create.html')
+    return render(request, 'create.html')
 
 def edit(request, id) :
     movie = get_object_or_404(Movie, pk = id)
@@ -36,7 +47,7 @@ def edit(request, id) :
             movie.image = request.FILES.get('image')
         movie.save()
         return redirect('home')
-    return render(request, 'main/edit.html', {'movie' : movie})
+    return render(request, 'edit.html', {'movie' : movie})
 
 def delete(request, id) :
     movie = get_object_or_404(Movie, pk = id)

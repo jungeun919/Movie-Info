@@ -7,6 +7,16 @@
     <title>Home</title>
 </head>
 <body>
+    <form action ="" method="get">
+        <input type="text" name="q" value="{{ q }}"/>
+        <input type="submit" value = "검색" />
+    </form>
+    <select id="sort-select" onchange="location = this.value;">
+        <option class="sort-none" value="/">-----</option>
+        <option class="sort-name" value="?sort=name">이름순</option>
+        <option class="sort-pub_date" value="?sort=pub_data">개봉날짜순</option>
+        <option class="sort-rank" value="?sort=rank">평점순</option>
+     </select>
     <a href="{% url 'create' %}">새 글 작성</a>
     <br><br>
     
